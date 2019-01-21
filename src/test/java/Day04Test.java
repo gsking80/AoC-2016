@@ -15,4 +15,11 @@ public class Day04Test {
 	    Assertions.assertThat(day04.sumRealRoomSectors()).isEqualTo(1514);
 	}
 
+	@Test
+	public void testSolution1() throws FileNotFoundException {
+		final FileReader fileReader = new FileReader(getClass().getClassLoader().getResource("Day04/input.txt").getPath());
+		final Day04 day04 = new Day04(fileReader);
+		Assertions.assertThat(day04.sumRealRoomSectors()).isEqualTo(185371);
+	}
+
 }
