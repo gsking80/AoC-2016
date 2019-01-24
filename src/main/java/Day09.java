@@ -30,9 +30,28 @@ public class Day09 {
 		return builder.length();
 	}
 
-	public static int superDecompressedLength(String input) {
-		// TODO Auto-generated method stub
-		return 0;
+	public static long superDecompressedLength(String input) {
+		long length = 0;
+		for (int i = 0; i < input.length(); i++) {
+			final char current = input.charAt(i);
+			if ('(' == current) {
+				final StringBuilder marker = new StringBuilder();
+				i++;
+				while (')' != input.charAt(i)) {
+					marker.append(input.charAt(i));
+					i++;
+				}
+				final String[] bits = marker.toString().split("x");
+				final int numChars = Integer.valueOf(bits[0]);
+				final int numTimes = Integer.valueOf(bits[1]);
+				i++;
+				length += superDecompressedLength(input.substring(i,i+numChars)) * numTimes;
+				i += numChars - 1;
+			} else {
+				length++;
+			}
+		}
+		return length;
 	}
 
 }
