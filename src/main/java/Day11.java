@@ -32,7 +32,7 @@ public class Day11 {
 
     while(!priorityQueue.isEmpty()) {
       current = priorityQueue.remove();
-      System.out.println("Estimated moves remaining - " + current.getEstimatedRemainingMoves() + " --- depth " + priorityQueue.size());
+      System.out.println("Moves - " + current.getMoves() + " --- Estimated total moves - " + current.getEstimatedTotalMoves() + " --- Estimated moves remaining - " + current.getEstimatedRemainingMoves() + " --- depth " + priorityQueue.size());
 
       if(!visited.contains(current)) {
         visited.add(current);
@@ -67,7 +67,9 @@ public class Day11 {
 
       @Override
       public int compare(State arg0, State arg1) {
-        return Comparator.comparing(State::getEstimatedTotalMoves).compare(arg0, arg1);
+//    	  return Comparator.comparing(State::getMoves).compare(arg0, arg1);
+//        return Comparator.comparing(State::getEstimatedTotalMoves).thenComparing(State::getEstimatedRemainingMoves).compare(arg0, arg1);
+        return Comparator.comparing(State::getEstimatedTotalMoves).thenComparing(State::getMoves).compare(arg0, arg1);
       }
 
     });
@@ -128,7 +130,7 @@ public class Day11 {
 	}
 
 	public int getEstimatedTotalMoves(){
-      return distances.get(this) + getEstimatedRemainingMoves();
+      return getMoves() + getEstimatedRemainingMoves();
     }
 
     public int getEstimatedRemainingMoves() {
@@ -137,6 +139,7 @@ public class Day11 {
         remaining += (4 - element.getGeneratorFloor());
         remaining += (4 - element.getMicrochipFloor());
       }
+      remaining += (4 - elevatorFloor);
 //      return (remaining / 2) + remaining % 2;
       return remaining;
     }
@@ -271,7 +274,7 @@ public class Day11 {
           	if (newState.isValid()) {
           		next.add(newState);
           	}
-          	for(final Element microchip2: generatorsOnFloor) {
+          	for(final Element microchip2: microchipsOnFloor) {
               	final Set<Element> newElements2 = new HashSet<>();
               	newElements2.add(new Element(microchip.name, microchip.getGeneratorFloor(), microchip.getMicrochipFloor() + 1));
               	newElements2.add(new Element(microchip2.name, microchip2.getGeneratorFloor(), microchip2.getMicrochipFloor() + 1));
@@ -311,7 +314,7 @@ public class Day11 {
   static class Element {
     @Override
 	public String toString() {
-		return "Element [name=" + name + ", generatorFloor=" + generatorFloor + ", microchipFloor=" + microchipFloor
+		return "\n Element [name=" + name + ", generatorFloor=" + generatorFloor + ", microchipFloor=" + microchipFloor
 				+ "]";
 	}
 
@@ -354,6 +357,9 @@ public class Day11 {
       this.name = name;
       this.generatorFloor = generatorFloor;
       this.microchipFloor = microchipFloor;
+      if (microchipFloor > 4) {
+    	  throw new RuntimeException("Nononono");
+      }
     }
     
     Element(final Element copy) {
