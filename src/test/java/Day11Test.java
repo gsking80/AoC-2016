@@ -21,7 +21,7 @@ public class Day11Test {
 		final Day11 day11 = new Day11(new Day11.Element("Pm", 1, 1), new Day11.Element("Co", 2, 3),
 				new Day11.Element("Cm", 2, 3), new Day11.Element("Ru", 2, 3), new Day11.Element("Pu", 2, 3),
 				new Day11.Element("Uup", 1, 1), new Day11.Element("Li2", 1, 1));
-		Assertions.assertThat(day11.minMoves()).isEqualTo(33);  // Not 27
+		Assertions.assertThat(day11.minMoves()).isEqualTo(57);
 	}
 
 }
