@@ -31,6 +31,17 @@ public class Day19 {
         return players.peek().getPlayerNumber();
     }
 
+    public static int winnerV2(final int players) {
+        int winner = 1;
+        for (int i = 1; i < players; i++) {
+            winner = winner % i + 1;
+            if (winner > (i + 1)/2) {
+                winner++;
+            }
+        }
+        return winner;
+    }
+
     private class Player {
         public int getPlayerNumber() {
             return playerNumber;

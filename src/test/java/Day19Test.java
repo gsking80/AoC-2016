@@ -17,4 +17,14 @@ public class Day19Test {
         Assertions.assertThat(day19.winner()).isEqualTo(1842613);
     }
 
+    @Test
+    public void test2a() {
+        Assertions.assertThat(Day19.winnerV2(5)).isEqualTo(2);
+    }
+
+    @Test
+    public void testSolution2() {
+        Assertions.assertThat(Day19.winnerV2(3018458)).isEqualTo(1424135);
+    }
+
 }
